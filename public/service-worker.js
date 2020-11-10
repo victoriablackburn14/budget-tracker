@@ -10,18 +10,21 @@ const FILES_TO_CACHE = [
   const RUNTIME = 'runtime';
   
   self.addEventListener('install', (event) => {
+    console.log("install");
     event.waitUntil(
       caches
         .open(PRECACHE)
-        .then((cache) => cache.addAll(FILES_TO_CACHE))
-        .then(self.skipWaiting())
+        .then((cache) => {console.log("open cache");cache.addAll(FILES_TO_CACHE)})
+        // .then(self.skipWaiting())
     );
   });
   
   // The activate handler takes care of cleaning up old caches.
   self.addEventListener('activate', (event) => {
-    const currentCaches = [PRECACHE, RUNTIME];
+    console.log("activate");
+    const currentCaches = [PRECACHE];
     event.waitUntil(
+      console.log("activating cache"),
       caches
         .keys()
         .then((cacheNames) => {
@@ -36,17 +39,20 @@ const FILES_TO_CACHE = [
         })
         .then(() => self.clients.claim())
     );
+    console.log("other console")
   });
   
   self.addEventListener('fetch', (event) => {
+    console.log("fetch")
     if (event.request.url.startsWith(self.location.origin)) {
+      console.log("checking fetch")
       event.respondWith(
         caches.match(event.request).then((cachedResponse) => {
           if (cachedResponse) {
             return cachedResponse;
           }
   
-          return caches.open(RUNTIME).then((cache) => {
+          return caches.open(PRECACHE).then((cache) => {
             return fetch(event.request).then((response) => {
               return cache.put(event.request, response.clone()).then(() => {
                 return response;
