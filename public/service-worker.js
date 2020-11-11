@@ -41,7 +41,7 @@ const FILES_TO_CACHE = [
     );
     console.log("other console")
   });
-  
+  //error is located here//
   self.addEventListener('fetch', (event) => {
     console.log("fetch")
     if (event.request.url.startsWith(self.location.origin)) {
