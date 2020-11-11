@@ -12,9 +12,8 @@ const FILES_TO_CACHE = [
   ];
   
   
-  
   self.addEventListener('install', (event) => {
-    if (event.request.PRECACHE === 'only-if-cached' && e.request.mode !== 'same-origin') {
+    if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
       return;
     }
     console.log("install");
@@ -93,7 +92,7 @@ const FILES_TO_CACHE = [
 
 
   self.addEventListener('fetch', (event) => {
-    if (event.request.cache === 'only-if-cached' && e.request.mode !== 'same-origin') {
+    if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
       return;
     }
     console.log("fetch")
