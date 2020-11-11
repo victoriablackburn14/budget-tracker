@@ -14,7 +14,7 @@ const FILES_TO_CACHE = [
   
   
   self.addEventListener('install', (event) => {
-    if (event.request.cache === 'only-if-cached' && e.request.mode !== 'same-origin') {
+    if (event.request.PRECACHE === 'only-if-cached' && e.request.mode !== 'same-origin') {
       return;
     }
     console.log("install");
@@ -32,7 +32,7 @@ const FILES_TO_CACHE = [
     const currentCaches = [PRECACHE];
     event.waitUntil(
       console.log("activating cache"),
-      caches
+      PRECACHE
         .keys()
         .then((cacheNames) => {
           return cacheNames.filter((cacheName) => !currentCaches.includes(cacheName));
@@ -40,7 +40,7 @@ const FILES_TO_CACHE = [
         .then((cachesToDelete) => {
           return Promise.all(
             cachesToDelete.map((cacheToDelete) => {
-              return caches.delete(cacheToDelete);
+              return PRECACHE.delete(cacheToDelete);
             })
           );
         })
@@ -116,7 +116,7 @@ const FILES_TO_CACHE = [
       })
     }
   });
-
+  
   self.addEventListener('message', function(event){
     console.log('transaction_data', event.data)
     if(event.data.hasOwnProperty('transaction_data')){
@@ -169,24 +169,15 @@ const FILES_TO_CACHE = [
     console.log('now online')
     if (event.tag === 'sendFormData') { 
       event.waitUntil(
-
         sendPostToServer()
         )
     }
+    
   });
 
   
-          // return caches.open(PRECACHE).then((cache) => {
-          //   return fetch(event.request).then((response) => {
-          //     return cache.put(event.request, response.clone()).then(() => {
-          //       return response;
-  //             });
-  //           });
-  //         });
-  //       })
-  //     );
-  //   }
-  // });
+         
+
 
 
  
