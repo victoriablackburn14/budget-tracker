@@ -13,9 +13,9 @@ const FILES_TO_CACHE = [
   
   
   self.addEventListener('install', (event) => {
-    if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
-      return;
-    }
+    // if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
+    //   return;
+    // // }
     console.log("install");
     event.waitUntil(
       caches
