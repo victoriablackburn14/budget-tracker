@@ -187,16 +187,6 @@ if ('serviceWorker' in navigator) {
          console.log('ServiceWorker registration failed: ',
          err);
        });
-    });     
+    });      
 }
 
-var data = {
-  transaction: transaction,
-  amount: amount
-}
-// send message to service worker via postMessage
-var msg = {
-'budget': data
-}
-navigator.serviceWorker.controller.postMessage(msg)  // <-This
-// line right here sends our data to sw.js

@@ -1,6 +1,6 @@
 from flask import flask, render_template, request
 
-app= Flask('post_requests');
+app= Flask('budget');
 
 @app.route('/')
 @app.route('/index')

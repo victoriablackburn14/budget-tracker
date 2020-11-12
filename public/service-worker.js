@@ -108,7 +108,7 @@ const FILES_TO_CACHE = [
         )
       );
     } else if (event.request.clone().method ==='POST'){
-      console.log('budget data', budget)
+      console.log('budget data')
       event.respondWith(fetch(event.request.clone().catch))
       savePostRequests(event.request.clone()).catch(function(error){
         savePostRequests(event.request.clone().url, budget)
