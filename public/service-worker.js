@@ -79,7 +79,7 @@ const FILES_TO_CACHE = [
   indexedDBOpen.onupgradeneeded = function () {
     // This should only executes if there's a need to 
     // create/update db.
-    this.result.createObjectStore('post_requests', {
+    this.result.createObjectStore('budget', {
      autoIncrement:  true, keyPath: 'id' })
   }
     // This will execute each time the database is opened.
@@ -95,7 +95,7 @@ const FILES_TO_CACHE = [
     if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
       return;
     }
-    console.log("fetch")
+    // console.log("fetch")
     if (event.request.method==='GET') {
       console.log("checking fetch")
       event.respondWith(

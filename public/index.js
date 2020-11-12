@@ -151,3 +151,52 @@ document.querySelector("#add-btn").onclick = function() {
 document.querySelector("#sub-btn").onclick = function() {
   sendTransaction(false);
 };
+
+function submitFunction (event) {
+  event.preventDefault()
+  console.log('submitted', event)
+  transaction = $('#t-name').val()
+  amount = $('#t-amount').val()
+  console.log('values,', transaction, amount)
+
+  data={
+    transaction: transaction,
+    amouont: amount,
+  }
+  $.ajax({
+    type: "POST",
+    url: '/submit',
+    contentType: 'application/json',
+    data: JSON.stringify(data),
+    success: function () {
+      console.log('data sent to server')
+    },
+    dataType: 'json'
+  });
+}
+
+if ('serviceWorker' in navigator) {
+
+   window.addEventListener('load', function() {
+     navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+  
+      console.log('Service Worker registration was successful')
+    
+       }, function(err) {
+         // registration failed :(
+         console.log('ServiceWorker registration failed: ',
+         err);
+       });
+    });     
+}
+
+var data = {
+  transaction: transaction,
+  amount: amount
+}
+// send message to service worker via postMessage
+var msg = {
+'budget': data
+}
+navigator.serviceWorker.controller.postMessage(msg)  // <-This
+// line right here sends our data to sw.js
